@@ -279,7 +279,7 @@ def load_publications_workbook(file_bytes: bytes) -> Dict[str, pd.DataFrame]:
 st.sidebar.image(
     "https://psm.umpsa.edu.my/images/ptj-umpsa.svg",  # Replace with your image URL or local path
     #caption="PSM UMPSA",
-    width='stretch=True
+    width='stretch'
 )
 st.sidebar.header("Developers:")
 Developers = [
@@ -305,7 +305,7 @@ with st.sidebar.expander("📂 Data Sources (Drag & Drop)", expanded=True):
 
 with st.sidebar.expander("⚙️ Performance", expanded=False):
     st.write("Fast reload with `@st.cache_data`.")
-    if st.button("Clear cached data", width='stretch=True):
+    if st.button("Clear cached data", width='stretch'):
         st.cache_data.clear()
         st.success("Cache cleared.")
 
@@ -423,7 +423,7 @@ elif section == "Grants • Interactive":
             tmp["Sponsor Category"] = tmp["Sponsor Category"].astype("string").fillna("Unknown")
             fig = px.bar(tmp, x="Sponsor Category", y="Approved Amount (RM)")
             fig.update_layout(height=380)
-            st.plotly_chart(fig, width='stretch=True)
+            st.plotly_chart(fig, width='stretch')
         else:
             st.info("Missing required columns.")
 
@@ -434,12 +434,12 @@ elif section == "Grants • Interactive":
             tmp.columns = ["FOR (Category)", "Count"]
             fig = px.bar(tmp, x="FOR (Category)", y="Count")
             fig.update_layout(height=380)
-            st.plotly_chart(fig, width='stretch=True)
+            st.plotly_chart(fig, width='stretch')
         else:
             st.info("Column 'FOR (Category)' not found.")
 
     st.subheader("Data Table (AKTIF 2026)")
-    st.dataframe(dff, width='stretch=True, hide_index=True)
+    st.dataframe(dff, width='stretch', hide_index=True)
     make_download_button(dff, "grants_filtered.csv")
 
     st.divider()
@@ -451,7 +451,7 @@ elif section == "Grants • Interactive":
         dpi = df_pi.copy()
         if q2:
             dpi = global_search(dpi, q2, cols=[c for c in ["Staff ID", "Name"] if c in dpi.columns])
-        st.dataframe(dpi, width='stretch=True, hide_index=True)
+        st.dataframe(dpi, width='stretch', hide_index=True)
         make_download_button(dpi, "pi_2026_filtered.csv", "Download PI CSV")
 
 
@@ -479,7 +479,7 @@ elif section == "Publications • Interactive":
         st.subheader("Cumulative Citations (Hardcoded from Summary)")
         fig = px.line(df_sum_cum, x="Year", y="Cumulative Citations", markers=True)
         fig.update_layout(height=360)
-        st.plotly_chart(fig, width='stretch=True)
+        st.plotly_chart(fig, width='stretch')
         st.caption(f"Total (All Years): **{TOTAL_CITATIONS_ALL:,}**")
 
     # ---- Researcher Profiles ----
@@ -527,11 +527,11 @@ elif section == "Publications • Interactive":
             k2.metric("Conferences", f"{len(prof_conf):,}")
 
             st.write("**ARTICLE**")
-            st.dataframe(prof_art, width='stretch=True, hide_index=True)
+            st.dataframe(prof_art, width='stretch', hide_index=True)
             make_download_button(prof_art, "researcher_articles.csv")
 
             st.write("**CONFERENCE**")
-            st.dataframe(prof_conf, width='stretch=True, hide_index=True)
+            st.dataframe(prof_conf, width='stretch', hide_index=True)
             make_download_button(prof_conf, "researcher_conferences.csv")
 
     # ---- Index (Article/Conference) ----
@@ -584,15 +584,15 @@ elif section == "Publications • Interactive":
                 st.write("**Counts by STATUS**")
                 tmp = dfx["STATUS"].astype("string").fillna("Unknown").value_counts().reset_index()
                 tmp.columns = ["STATUS", "Count"]
-                st.plotly_chart(px.bar(tmp, x="STATUS", y="Count"), width='stretch=True)
+                st.plotly_chart(px.bar(tmp, x="STATUS", y="Count"), width='stretch')
 
             with right:
                 st.write("**Top Source Titles**")
                 tmp = dfx["SOURCE TITLE"].astype("string").fillna("Unknown").value_counts().head(15).reset_index()
                 tmp.columns = ["Source Title", "Count"]
-                st.plotly_chart(px.bar(tmp, x="Source Title", y="Count"), width='stretch=True)
+                st.plotly_chart(px.bar(tmp, x="Source Title", y="Count"), width='stretch')
 
-            st.dataframe(dfx, width='stretch=True, hide_index=True)
+            st.dataframe(dfx, width='stretch', hide_index=True)
             make_download_button(dfx, "publications_filtered.csv")
 
     # ---- Citations ----
@@ -612,7 +612,7 @@ elif section == "Publications • Interactive":
 
             st.dataframe(
                 top[["Publication Year", "Document Title", "Journal Title", "Total"]],
-                width='stretch=True,
+                width='stretch',
                 hide_index=True,
             )
             make_download_button(top, "top_cited_documents.csv", "Download Top Cited CSV")
@@ -652,6 +652,6 @@ elif section == "Data Explorer":
     if q:
         df = global_search(df, q)
 
-    st.dataframe(df.head(int(max_rows)), width='stretch=True, hide_index=True)
+    st.dataframe(df.head(int(max_rows)), width='stretch', hide_index=True)
     safe_name = re.sub(r"[^A-Za-z0-9]+", "_", table_name).lower()
     make_download_button(df, f"{safe_name}.csv")
