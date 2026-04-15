@@ -135,7 +135,7 @@ def make_download_button(df: pd.DataFrame, filename: str, label: str = "Download
         data=csv,
         file_name=filename,
         mime="text/csv",
-        width='stretch,
+        width='stretch',
     )
 
 
